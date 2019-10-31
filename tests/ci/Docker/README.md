@@ -9,7 +9,7 @@ Start Docker with the following command:
 **NOTE:** Make changes to `-v`, `-p`, `--env-file` as appropriate.
 
 ```bash
-docker run --rm -h xdmod8_5 --shm-size 2g -it -v ~/scratch:/scratch -p 3306:3306 -p 8080:8080 --env-file ~/xdmod.env tas-tools-ext-01.ccr.xdmod.org/centos7_6-open8.5.1:latest /bin/bash
+docker run --rm -h xdmod9_0 --shm-size 2g -it -v ~/scratch:/scratch -p 3306:3306 -p 8080:8080 --env-file ~/xdmod.env tas-tools-ext-01.ccr.xdmod.org/centos7_6-open8.5.1:latest /bin/bash
 ```
 
 ## Demonstration
@@ -69,7 +69,11 @@ Below is an example:
 ```bash
 #!/bin/bash
 XDMOD_GIT_USER=${XDMOD_GIT_USER:-'ubccr'}
+<<<<<<< HEAD
 XDMOD_GIT_BRANCH=${XDMOD_GIT_BRANCH:-'xdmod8.5'}
+=======
+XDMOD_GIT_BRANCH=${XDMOD_GIT_BRANCH:-'xdmod9.0'}
+>>>>>>> Change version numbers and environment variable
 #upgrade if you dont want to reingest data and are not testing that portion
 #otherwise fresh_install
 export XDMOD_TEST_MODE=${XDMOD_TEST_MODE:-'upgrade'}
