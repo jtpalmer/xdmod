@@ -165,9 +165,15 @@ abstract class aRdbmsDestinationAction extends aAction
               ? array($parsedTableDefinition)
               : $parsedTableDefinition );
 
-        foreach ( $parsedTableDefinitionList as $tableDefinition ) {
+        foreach ( $parsedTableDefinitionList as $tableConfig ) {
 
             try {
+                $tableDefinition = isset($tableConfig->table_definition) ? $tableConfig->table_definition : $tableConfig;
+                $schema = $this->destinationEndpoint->getSchema();
+                if (isset($tableDefinition->schema) && $tableDefinition->schema != $schema) {
+                     $this->logger->debug(sprintf("Replacing table schema `%s` with `%s`", $tableDefinition->schema, $schema));
+                }
+                $tableDefinition->schema = $schema;
                 $etlTable = new Table(
                     $tableDefinition,
                     $this->destinationEndpoint->getSystemQuoteChar(),
@@ -176,7 +182,6 @@ abstract class aRdbmsDestinationAction extends aAction
                 $this->logger->debug(
                     sprintf("Created ETL destination table object for table definition key '%s'", $etlTable->name)
                 );
-                $etlTable->schema = $this->destinationEndpoint->getSchema();
 
                 if ( ! is_string($etlTable->name) || empty($etlTable->name) ) {
                     $this->logAndThrowException("Destination table name must be a non-empty string");

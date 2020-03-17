@@ -1146,9 +1146,7 @@ ORDER BY trigger_name ASC";
                 break;
 
             case 'schema':
-                // The schema is not required, but may be defined in both the
-                // table definition and the destination endpoint.  This is fine
-                // as long as they both specify the same schema.
+                // Changing the schema is not allowed.
                 if (isset($this->properties[$property])
                     && $this->properties[$property] != $value) {
                     $this->logAndThrowException('Table schema may not be changed');

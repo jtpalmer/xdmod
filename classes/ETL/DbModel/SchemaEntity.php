@@ -14,12 +14,15 @@ use Log;
 use CCR\Loggable;
 use ETL\DataEndpoint;
 use ETL\DataEndpoint\DataEndpointOptions;
+use stdClass;
 
 class SchemaEntity extends NamedEntity
 {
     // Properties required by this class. These will be merged with other required
     // properties up the call chain. See @Entity::$requiredProperties
-    private $localRequiredProperties = array();
+    private $localRequiredProperties = array(
+        'schema'
+    );
 
     // Properties provided by this class. These will be merged with other properties up
     // the call chain. See @Entity::$properties
@@ -37,6 +40,23 @@ class SchemaEntity extends NamedEntity
         // Property merging is performed first so the values can be used in the constructor
         parent::mergeProperties($this->localRequiredProperties, $this->localProperties);
         parent::__construct($config, $systemQuoteChar, $logger);
+    }
+
+    /* ------------------------------------------------------------------------------------------
+     * Set the schema property before any other so that it can be set in any
+     * children of this entity.
+     *
+     * @see iEntity::initialize()
+     * ------------------------------------------------------------------------------------------
+     */
+
+    public function initialize(stdClass $config)
+    {
+        if (!isset($config->schema)) {
+             $this->logAndThrowException('Config missing required properties (schema)');
+        }
+        $this->schema = $config->schema;
+        return parent::initialize($config);
     }
 
     /* ------------------------------------------------------------------------------------------

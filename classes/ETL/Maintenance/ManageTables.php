@@ -103,13 +103,18 @@ class ManageTables extends aRdbmsDestinationAction implements iAction
                 $defFile,
                 $this->options->paths->base_dir,
                 $this->logger
-            );
+            )->toStdClass();
+            $tableDefinition = isset($tableConfig->table_definition) ? $tableConfig->table_definition : $tableConfig;
+            $schema = $this->destinationEndpoint->getSchema();
+            if (isset($tableDefinition->schema) && $tableDefinition->schema != $schema) {
+                $this->logger->debug(sprintf("Replacing table schema `%s` with `%s`", $tableDefinition->schema, $schema));
+            }
+            $tableDefinition->schema = $schema;
             $etlTable = new Table(
-                $tableConfig->toStdClass(),
+                $tableDefinition,
                 $this->destinationEndpoint->getSystemQuoteChar(),
                 $this->logger
             );
-            $etlTable->schema = $this->destinationEndpoint->getSchema();
             if ( array_key_exists($etlTable->name, $this->etlDestinationTableList) ) {
                 $this->logger->warning(
                     sprintf(

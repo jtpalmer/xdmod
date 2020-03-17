@@ -10,11 +10,11 @@
 require __DIR__ . '/../../configuration/linker.php';
 restore_exception_handler();
 
-use \Exception;
 use CCR\Log;
 use ETL\Configuration\EtlConfiguration;
 use ETL\DbModel\Table;
 use ETL\DbModel\AggregationTable;
+use Configuration\Configuration;
 
 $supportedFormats = array("json", "sql");
 
@@ -193,8 +193,14 @@ $parsedTable = null;
 
 if ( null !== $scriptOptions['table-config'] ) {
     try {
-        $parsedTable = new Table($scriptOptions['table-config']);
-        $parsedTable->schema = $dataEndpoint->getSchema();
+        $tableConfig = Configuration::factory($scriptOptions['table-config'])->toStdClass();
+        $tableDefinition = isset($tableConfig->table_definition) ? $tableConfig->table_definition : $tableConfig;
+        $schema = $dataEndpoint->getSchema();
+        if (isset($tableDefinition->schema) && $tableDefinition->schema != $schema) {
+            $logger->debug(sprintf("Replacing table schema `%s` with `%s`", $tableDefinition->schema, $schema));
+        }
+        $tableDefinition->schema = $schema;
+        $parsedTable = new Table($tableDefinition);
         $parsedTable->verify();
     } catch ( Exception $e) {
         exit($e->getMessage() . "\n");
