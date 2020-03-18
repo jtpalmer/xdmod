@@ -771,14 +771,18 @@ class pdoAggregator extends aAggregator
             // Remove the first join (from) and replace it with the temporary table that we are
             // going to create
 
+            $schema = $this->sourceEndpoint->getSchema();
             $sourceJoins = $this->etlSourceQuery->joins;
             $firstJoin = array_shift($sourceJoins);
             $newFirstJoin = clone $firstJoin;
             $newFirstJoin->name = $tmpTableName;
-            $newFirstJoin->schema = $this->sourceEndpoint->getSchema();
+            $newFirstJoin->schema = $schema;
 
             $this->etlSourceQuery->joins = array($newFirstJoin);
             foreach ( $sourceJoins as $join ) {
+                if (!isset($join->schema)) {
+                    $join->schema = $schema;
+                }
                 $this->etlSourceQuery->addJoin($join);
             }
             $this->etlSourceQueryModified = true;
