@@ -2,6 +2,7 @@
     "Foreign key constraint without schema": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -48,6 +49,7 @@
     "Foreign key constraint with schema": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -95,6 +97,7 @@
     "Foreign key constraint with ON DELETE": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -142,6 +145,7 @@
     "Foreign key constraint with ON UPDATE": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -189,6 +193,7 @@
     "Foreign key constraint with ON UPDATE and ON DELETE": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -237,6 +242,7 @@
     "Named Foreign key constraint": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -284,6 +290,7 @@
     "Multiple foreign key constraints": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [

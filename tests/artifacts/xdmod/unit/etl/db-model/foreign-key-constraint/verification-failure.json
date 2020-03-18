@@ -2,6 +2,7 @@
     "Empty columns": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -46,6 +47,7 @@
     "Missing referenced table": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -91,6 +93,7 @@
     "Missing referenced columns": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "InnoDB",
                 "columns": [
@@ -134,6 +137,7 @@
     "Unsupported engine": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_table",
                 "engine": "MyISAM",
                 "columns": [

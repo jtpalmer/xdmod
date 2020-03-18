@@ -2,6 +2,7 @@
     "Alter ON DELETE from NO ACTION to CASCADE": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test_db_model",
                 "engine": "InnoDB",
                 "charset": "latin1",
