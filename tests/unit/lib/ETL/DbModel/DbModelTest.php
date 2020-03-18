@@ -72,6 +72,7 @@ class DbModelTest extends \PHPUnit_Framework_TestCase
     public function testTableSchema()
     {
         $config = (object) array(
+            'schema' => "my_schema",
             'name' => "table_no_schema",
             'columns' => array(
                 (object) array(
@@ -94,7 +95,6 @@ class DbModelTest extends \PHPUnit_Framework_TestCase
         );
 
         $table = new Table($config, '`', self::$logger);
-        $table->schema = "my_schema";
         $table->verify();
 
         // SQL with no schema
@@ -125,6 +125,7 @@ class DbModelTest extends \PHPUnit_Framework_TestCase
     public function testIndexInitializationError()
     {
         $config = (object) [
+            'schema' => 'my_schema',
             'name' => 'initialize_error',
             'columns' => [
                 (object) [
@@ -155,6 +156,7 @@ class DbModelTest extends \PHPUnit_Framework_TestCase
     public function testTableVerificationError()
     {
         $config = (object) array(
+            'schema' => 'my_schema',
             'name' => "verification_error",
             'columns' => array( (object) array(
                 'name' => 'column1',
@@ -495,4 +497,4 @@ class DbModelTest extends \PHPUnit_Framework_TestCase
         $expected = trim(file_get_contents(self::TEST_ARTIFACT_OUTPUT_PATH . '/table_def-charset.sql'));
         $this->assertEquals($expected, $generated);
     }
-} // class ConfigurationTest
+}
