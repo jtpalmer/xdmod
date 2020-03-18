@@ -1,5 +1,6 @@
 {
   "table_definition": {
+    "schema": "modw_aggregates",
     "name": "resourceallocationfact_by_",
     "table_prefix": "resourceallocationfact_by_",
     "engine": "MyISAM",

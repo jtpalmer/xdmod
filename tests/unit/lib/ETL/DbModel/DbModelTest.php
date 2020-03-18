@@ -225,6 +225,7 @@ class DbModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $generated);
 
         $config = (object) array(
+            'schema' => 'my_schema',
             'columns' => array('col1', 'col2'),
             'referenced_table' => 'other_table',
             'referenced_columns' => array('col3', 'col4'),

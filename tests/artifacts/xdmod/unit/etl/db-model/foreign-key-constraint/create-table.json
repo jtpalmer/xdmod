@@ -53,6 +53,7 @@
     "Table with complex foreign key constraint": [
         {
             "table_definition": {
+                "schema": "test_schema",
                 "name": "test",
                 "engine": "InnoDB",
                 "columns": [
