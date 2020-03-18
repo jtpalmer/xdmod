@@ -1,5 +1,6 @@
 {
   "table_definition": {
+    "schema": "modw_ra",
     "name": "resource_allocations",
     "engine": "MyISAM",
     "columns": [

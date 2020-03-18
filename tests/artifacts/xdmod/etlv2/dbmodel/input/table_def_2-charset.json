@@ -1,6 +1,7 @@
 {
   "#": "Sample table definition for DbModel testing",
   "table_definition": {
+    "schema": "my_schema",
     "name": "test_db_model",
     "engine": "InnoDB",
     "charset": "utf8mb4",
