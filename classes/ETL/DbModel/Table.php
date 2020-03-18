@@ -555,6 +555,10 @@ ORDER BY trigger_name ASC";
 
     public function addForeignKeyConstraint($config, $overwriteDuplicates = false)
     {
+        if ($config instanceof stdClass && !isset($config->schema)) {
+            $config->schema = $this->schema;
+        }
+
         $item = ( is_object($config) && $config instanceof ForeignKeyConstraint
                   ? $config
                   : new ForeignKeyConstraint($config, $this->systemQuoteChar, $this->logger) );
@@ -613,6 +617,9 @@ ORDER BY trigger_name ASC";
 
     public function addTrigger($config, $overwriteDuplicates = false)
     {
+        if ($config instanceof stdClass && !isset($config->schema)) {
+            $config->schema = $this->schema;
+        }
 
         $item = ( is_object($config) && $config instanceof Trigger
                   ? $config
@@ -1146,22 +1153,18 @@ ORDER BY trigger_name ASC";
                 break;
 
             case 'schema':
-                // Changing the schema is not allowed.
+                // The schema will be set first by the parent class
+                // `SchemaEntity` before all other properties and again by the
+                // `Entity` class when all the properties are set. The schema
+                // may not be changed because that could cause inconsistencies
+                // with the foreign key constraints and triggers that default
+                // to using the table schema.
+                //
+                // @see \ETL\DbModel\SchemaEntity::initialize()
+                // @see \ETL\DbModel\Entity::initialize()
                 if (isset($this->properties[$property])
                     && $this->properties[$property] != $value) {
                     $this->logAndThrowException('Table schema may not be changed');
-                }
-
-                // Set schema for all SchemaEntity properties if not set.
-                foreach ($this->foreign_key_constraints as $constraint) {
-                    if ($constraint->schema === null) {
-                        $constraint->schema = $value;
-                    }
-                }
-                foreach ($this->triggers as $trigger) {
-                    if ($trigger->schema === null) {
-                        $trigger->schema = $value;
-                    }
                 }
                 $this->properties[$property] = $value;
                 break;
