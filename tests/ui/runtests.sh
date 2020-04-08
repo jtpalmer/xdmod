@@ -39,7 +39,6 @@ then
 else
     echo "No cache file found."
 fi
-npm set progress=false
 npm install --quiet
 
 if [ "$4" = "--sso" ];
