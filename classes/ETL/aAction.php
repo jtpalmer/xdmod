@@ -365,6 +365,23 @@ abstract class aAction extends aEtlObject
             return;
         }
 
+        // Add PHP constants to variable store.
+        $constantNames = [
+            'HIERARCHY_BOTTOM_LEVEL_INFO',
+            'HIERARCHY_BOTTOM_LEVEL_LABEL',
+            'HIERARCHY_MIDDLE_LEVEL_INFO',
+            'HIERARCHY_MIDDLE_LEVEL_LABEL',
+            'HIERARCHY_TOP_LEVEL_INFO',
+            'HIERARCHY_TOP_LEVEL_LABEL',
+            'ORGANIZATION_NAME',
+            'ORGANIZATION_NAME_ABBREV'
+        ];
+        $constantMap = [];
+        foreach ($constantNames as $constantName) {
+            $constantMap[$constantName] = constant($constantName);
+        }
+        $this->variableStore->add($constantMap);
+
         // Set up any variables associated with the Overseer that should be available for
         // substitution in actions such as start and end dates, number of days, etc.
 
